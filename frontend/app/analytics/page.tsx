@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -37,13 +38,13 @@ export default function SecurityAnalyticsPage() {
 
   const fetchAnalytics = async () => {
     try {
-      const sRes = await fetch("http://127.0.0.1:8000/api/analytics/severity");
+      const sRes = await fetch(`${API_BASE}/analytics/severity`);
       if (sRes.ok) setSeverityData(await sRes.json());
 
-      const cRes = await fetch("http://127.0.0.1:8000/api/analytics/categories");
+      const cRes = await fetch(`${API_BASE}/analytics/categories`);
       if (cRes.ok) setCategoryData(await cRes.json());
 
-      const tRes = await fetch("http://127.0.0.1:8000/api/analytics/trends");
+      const tRes = await fetch(`${API_BASE}/analytics/trends`);
       if (tRes.ok) setTrendsData(await tRes.json());
     } catch (e) {
       console.log("Analytics fetch notice:", e);

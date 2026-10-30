@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -24,7 +25,7 @@ export default function ReportsPage() {
 
   const fetchReports = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/reports");
+      const res = await fetch(`${API_BASE}/reports`);
       if (res.ok) {
         const data = await res.json();
         setReports(data);
@@ -39,7 +40,7 @@ export default function ReportsPage() {
   const handleRegenerate = async () => {
     setGenerating(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/reports/generate?scan_id=1", {
+      const res = await fetch(`${API_BASE}/reports/generate?scan_id=1`, {
         method: "POST"
       });
       if (res.ok) {
@@ -81,7 +82,7 @@ export default function ReportsPage() {
             </p>
             {reports.length > 0 ? (
               <a
-                href={`http://127.0.0.1:8000/api/reports/${reports[0].id}/download`}
+                href={`${API_BASE}/reports/${reports[0].id}/download`}
                 target="_blank"
                 rel="noreferrer"
                 className="w-full py-2 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition"
@@ -107,7 +108,7 @@ export default function ReportsPage() {
               Full machine-readable vulnerability telemetry for SIEM, SOAR, and custom automation pipelines.
             </p>
             <a
-              href="http://127.0.0.1:8000/api/reports/export/json?scan_id=1"
+              href={`${API_BASE}/reports/export/json?scan_id=1`}
               target="_blank"
               rel="noreferrer"
               className="w-full py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition"
@@ -125,7 +126,7 @@ export default function ReportsPage() {
               Tabular spreadsheet export for audit teams, compliance officers, and executive review meetings.
             </p>
             <a
-              href="http://127.0.0.1:8000/api/reports/export/csv?scan_id=1"
+              href={`${API_BASE}/reports/export/csv?scan_id=1`}
               target="_blank"
               rel="noreferrer"
               className="w-full py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition"
@@ -179,7 +180,7 @@ export default function ReportsPage() {
                       </td>
                       <td className="py-3 px-4 text-right">
                         <a
-                          href={`http://127.0.0.1:8000/api/reports/${r.id}/download`}
+                          href={`${API_BASE}/reports/${r.id}/download`}
                           target="_blank"
                           rel="noreferrer"
                           className="px-3 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 font-medium inline-flex items-center gap-1.5 transition"

@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -37,7 +38,7 @@ export default function VulnerabilityDetailPage() {
 
   const fetchVuln = async () => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/vulnerabilities/${vulnId}`);
+      const res = await fetch(`${API_BASE}/vulnerabilities/${vulnId}`);
       if (res.ok) {
         const data = await res.json();
         setVuln(data);
@@ -53,7 +54,7 @@ export default function VulnerabilityDetailPage() {
     setVerifying(true);
     setVerifyResult(null);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/vulnerabilities/${vulnId}/verify`, {
+      const res = await fetch(`${API_BASE}/vulnerabilities/${vulnId}/verify`, {
         method: "POST"
       });
       if (res.ok) {
@@ -73,7 +74,7 @@ export default function VulnerabilityDetailPage() {
   const handleGenerateFix = async () => {
     setGeneratingFix(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/vulnerabilities/${vulnId}/generate-fix`, {
+      const res = await fetch(`${API_BASE}/vulnerabilities/${vulnId}/generate-fix`, {
         method: "POST"
       });
       if (res.ok) {
@@ -97,7 +98,7 @@ export default function VulnerabilityDetailPage() {
 
   const handleStatusChange = async (newStatus: string) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/vulnerabilities/${vulnId}/status`, {
+      const res = await fetch(`${API_BASE}/vulnerabilities/${vulnId}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus, remediation_notes: `Manual status change to ${newStatus}` })

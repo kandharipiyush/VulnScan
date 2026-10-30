@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vulnscan-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./vulnscan.db
+      - SECRET_KEY=vulnscan-production-secret-key-2026
+      - ALLOW_LOCALHOST=True
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      - vulnscan-data:/app/generated_reports
+      - vulnscan-db:/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:8000/api
+    container_name: vulnscan-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  target-lab:
+    build:
+      context: ./icream-shop
+      dockerfile: Dockerfile
+    container_name: vulnscan-icream-target
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+
+volumes:
+  vulnscan-data:
+  vulnscan-db:

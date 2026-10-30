@@ -21,3 +21,4 @@ Find vulnerabilities before attackers do. Welcome to VulnScan.
 $speaker.Speak($script)
 $speaker.Dispose()
 Write-Host "Voiceover audio saved successfully: $outputFile"
+

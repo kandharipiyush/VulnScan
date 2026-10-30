@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -36,7 +37,7 @@ export default function ProjectsPage() {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/projects");
+      const res = await fetch(`${API_BASE}/projects`);
       if (res.ok) {
         const data = await res.json();
         setProjects(data);
@@ -52,7 +53,7 @@ export default function ProjectsPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/projects", {
+      const res = await fetch(`${API_BASE}/projects`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -78,7 +79,7 @@ export default function ProjectsPage() {
 
   const handleQuickScan = async (projectId: number) => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/scans", {
+      const res = await fetch(`${API_BASE}/scans`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

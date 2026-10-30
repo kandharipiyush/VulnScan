@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -39,7 +40,7 @@ jobs:
 
       - name: Trigger VulnScan Automated Gate Check
         run: |
-          response=$(curl -s -X POST "http://localhost:8000/api/cicd/evaluate" \\
+          response=$(curl -s -X POST "${API_BASE}/cicd/evaluate" \\
             -H "Content-Type: application/json" \\
             -d '{"project_id": 1, "branch": "\${{ github.ref_name }}", "commit_hash": "\${{ github.sha }}", "policy": "${policy}"}')
           
@@ -58,7 +59,7 @@ jobs:
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/cicd/history");
+      const res = await fetch(`${API_BASE}/cicd/history`);
       if (res.ok) setHistory(await res.json());
     } catch {}
   };
@@ -67,7 +68,7 @@ jobs:
     setEvaluating(true);
     setGateResult(null);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/cicd/evaluate", {
+      const res = await fetch(`${API_BASE}/cicd/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -33,7 +34,7 @@ export default function NewScanPage() {
   const [starting, setStarting] = useState(false);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/projects")
+    fetch(`${API_BASE}/projects`)
       .then((r) => r.json())
       .then((data) => setProjects(data))
       .catch(() => {});
@@ -76,7 +77,7 @@ export default function NewScanPage() {
 
     setStarting(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/scans", {
+      const res = await fetch(`${API_BASE}/scans`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

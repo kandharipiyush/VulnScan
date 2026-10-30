@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -28,7 +29,7 @@ export default function VulnerabilitiesPage() {
 
   const fetchVulnerabilities = async () => {
     try {
-      let url = "http://127.0.0.1:8000/api/vulnerabilities?";
+      let url = `${API_BASE}/vulnerabilities?`;
       if (selectedSeverity !== "ALL") {
         if (selectedSeverity === "FIXED") {
           url += "status=FIXED&";

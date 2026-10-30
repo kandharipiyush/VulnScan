@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -20,7 +21,7 @@ export default function GitHubIntegrationPage() {
   const [repoUrl, setRepoUrl] = useState("https://github.com/vulnscan-demo/icream-shop");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/github/repositories")
+    fetch(`${API_BASE}/github/repositories`)
       .then((r) => r.json())
       .then((data) => setRepos(data))
       .catch(() => {})
@@ -31,7 +32,7 @@ export default function GitHubIntegrationPage() {
     e.preventDefault();
     setConnecting(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/github/connect", {
+      const res = await fetch(`${API_BASE}/github/connect`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ repo_url: repoUrl, branch: "main" })

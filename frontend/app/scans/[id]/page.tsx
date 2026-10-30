@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -46,13 +47,13 @@ export default function LiveScanMonitorPage() {
 
   const fetchScanDetails = async () => {
     try {
-      const sRes = await fetch(`http://127.0.0.1:8000/api/scans/${scanId}`);
+      const sRes = await fetch(`${API_BASE}/scans/${scanId}`);
       if (sRes.ok) {
         const sData = await sRes.json();
         setScan(sData);
       }
 
-      const lRes = await fetch(`http://127.0.0.1:8000/api/scans/${scanId}/logs`);
+      const lRes = await fetch(`${API_BASE}/scans/${scanId}/logs`);
       if (lRes.ok) {
         const lData = await lRes.json();
         setLogs(lData);

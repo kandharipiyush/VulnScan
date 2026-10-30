@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -69,35 +70,35 @@ export default function DashboardPage() {
   const fetchDashboardData = async () => {
     try {
       // 1. Fetch Overview Metrics
-      const ovRes = await fetch("http://127.0.0.1:8000/api/analytics/overview");
+      const ovRes = await fetch(`${API_BASE}/analytics/overview`);
       if (ovRes.ok) {
         const ovData = await ovRes.json();
         setOverview(ovData);
       }
 
       // 2. Fetch Severity
-      const sevRes = await fetch("http://127.0.0.1:8000/api/analytics/severity");
+      const sevRes = await fetch(`${API_BASE}/analytics/severity`);
       if (sevRes.ok) {
         const sevList = await sevRes.json();
         if (sevList.length > 0) setSeverityData(sevList);
       }
 
       // 3. Fetch Categories
-      const catRes = await fetch("http://127.0.0.1:8000/api/analytics/categories");
+      const catRes = await fetch(`${API_BASE}/analytics/categories`);
       if (catRes.ok) {
         const catList = await catRes.json();
         if (catList.length > 0) setCategoriesData(catList);
       }
 
       // 4. Fetch Recent Scans
-      const scanRes = await fetch("http://127.0.0.1:8000/api/scans");
+      const scanRes = await fetch(`${API_BASE}/scans`);
       if (scanRes.ok) {
         const scans = await scanRes.json();
         setRecentScans(scans.slice(0, 5));
       }
 
       // 5. Fetch Critical & High Findings
-      const vulnRes = await fetch("http://127.0.0.1:8000/api/vulnerabilities?severity=CRITICAL");
+      const vulnRes = await fetch(`${API_BASE}/vulnerabilities?severity=CRITICAL`);
       if (vulnRes.ok) {
         const vulns = await vulnRes.json();
         setCriticalFindings(vulns);

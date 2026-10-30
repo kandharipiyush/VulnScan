@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState } from "react";
 import {
@@ -53,7 +54,7 @@ export default function AIAssistantPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/assistant/chat", {
+      const res = await fetch(`${API_BASE}/assistant/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: textToSend, vulnerability_id: 1 })

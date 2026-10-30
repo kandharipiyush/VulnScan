@@ -1,0 +1,35 @@
+services:
+  # VulnScan Backend REST API
+  - type: web
+    name: vulnscan-backend
+    env: python
+    rootDir: backend
+    buildCommand: "pip install -r requirements.txt && python seed.py || true"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    plan: free
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///./vulnscan.db
+      - key: ALLOW_LOCALHOST
+        value: "true"
+      - key: GEMINI_API_KEY
+        sync: false
+
+  # VulnScan Next.js Frontend
+  - type: web
+    name: vulnscan-frontend
+    env: node
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm run start"
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: vulnscan-backend
+          property: url

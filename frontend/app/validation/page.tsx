@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE } from "@/lib/api";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -69,7 +70,7 @@ export default function SecurityValidationLabPage() {
     setActiveTest(testItem.id);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/validation", {
+      const res = await fetch(`${API_BASE}/validation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
