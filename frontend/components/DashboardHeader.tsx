@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Shield, Play, RefreshCw, AlertTriangle, CheckCircle, ExternalLink } from "lucide-react";
+import { Shield, Play, RefreshCw, AlertTriangle, CheckCircle, ExternalLink, Video } from "lucide-react";
 
 interface HeaderProps {
   title: string;
@@ -88,6 +88,15 @@ export default function DashboardHeader({ title, subtitle, actionButton }: Heade
             <ExternalLink className="h-3.5 w-3.5" />
           </a>
         </div>
+
+        <Link
+          href="/demo-video"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 font-medium text-xs transition-all shadow-sm"
+          title="Watch the 11-scene walkthrough video with AI voiceover"
+        >
+          <Video className="h-3.5 w-3.5 text-purple-400" />
+          <span>Demo Video</span>
+        </Link>
 
         {actionButton || (
           <Link

@@ -20,6 +20,8 @@ venv/
 # Cloned targets / temp storage
 backend/scanned_repos/
 test_designsphere_scan.py
+demo_recording/
+demo_voiceover.wav
 
 # Databases & local sqlite
 *.db
@@ -33,3 +35,4 @@ test_designsphere_scan.py
 # OS
 .DS_Store
 Thumbs.db
+

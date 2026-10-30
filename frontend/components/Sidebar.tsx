@@ -15,7 +15,8 @@ import {
   BarChart3,
   GitBranch,
   CheckCircle2,
-  Server
+  Server,
+  Film
 } from "lucide-react";
 import GithubIcon from "@/components/GithubIcon";
 
@@ -30,6 +31,7 @@ const NAV_ITEMS = [
   { label: "Security Analytics", href: "/analytics", icon: BarChart3 },
   { label: "CI/CD DevSecOps", href: "/cicd", icon: GitBranch },
   { label: "GitHub Integration", href: "/integrations/github", icon: GithubIcon },
+  { label: "Demo Video & Voice", href: "/demo-video", icon: Film },
 ];
 
 export default function Sidebar() {
