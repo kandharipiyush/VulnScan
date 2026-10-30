@@ -91,7 +91,7 @@ class ScanOrchestrator:
 
         # Fallback to local source path or iCream Shop if target is demo
         if not source_dir or not os.path.exists(source_dir):
-            if "icream" in project.name.lower() or "demo" in project.name.lower() or "8001" in target_str:
+            if "icream" in project.name.lower() or "demo" in project.name.lower() or "8001" in target_str or (settings.ICREAM_SHOP_URL and settings.ICREAM_SHOP_URL in target_str):
                 default_icream_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../icream-shop"))
                 if os.path.exists(default_icream_path):
                     source_dir = default_icream_path

@@ -21,9 +21,10 @@ class Settings(BaseSettings):
     # Reports
     REPORTS_DIR: str = os.getenv("REPORTS_DIR", "./generated_reports")
     
-    # Target validation
+    # Target validation & Internal Service Bindings (Vercel Services)
     ALLOW_LOCALHOST: bool = True
     MAX_REQUEST_TIMEOUT: int = 15
+    ICREAM_SHOP_URL: str = os.getenv("ICREAM_SHOP_URL", "http://127.0.0.1:8001")
 
     class Config:
         env_file = ".env"

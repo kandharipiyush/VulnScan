@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Shield, Play, RefreshCw, AlertTriangle, CheckCircle, ExternalLink, Video } from "lucide-react";
+import { API_BASE } from "@/lib/api";
 
 interface HeaderProps {
   title: string;
@@ -20,7 +21,7 @@ export default function DashboardHeader({ title, subtitle, actionButton }: Heade
 
   const checkTargetMode = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8001/api/mode");
+      const res = await fetch(`${API_BASE}/demo-target/mode`);
       if (res.ok) {
         const data = await res.json();
         setTargetMode(data.mode);
@@ -33,13 +34,13 @@ export default function DashboardHeader({ title, subtitle, actionButton }: Heade
   const toggleMode = async () => {
     setToggling(true);
     try {
-      const res = await fetch("http://127.0.0.1:8001/api/mode/toggle", { method: "POST" });
+      const res = await fetch(`${API_BASE}/demo-target/toggle`, { method: "POST" });
       if (res.ok) {
         const data = await res.json();
         setTargetMode(data.mode);
       }
     } catch (e) {
-      alert("Could not reach target at http://127.0.0.1:8001. Ensure iCream Shop is running.");
+      alert("Could not reach demo target. Ensure service is running.");
     } finally {
       setToggling(false);
     }

@@ -86,3 +86,4 @@ docker compose up -d --build
 | Variable | Description | Example |
 |---|---|---|
 | `NEXT_PUBLIC_API_URL` | Public URL of the FastAPI backend | `https://api.yourdomain.com/api` |
+

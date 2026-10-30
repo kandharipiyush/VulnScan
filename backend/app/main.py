@@ -39,6 +39,7 @@ app.include_router(cicd.router, prefix=settings.API_PREFIX)
 app.include_router(github.router, prefix=settings.API_PREFIX)
 
 @app.get("/health")
+@app.get("/api/health")
 def health_check():
     return {
         "status": "healthy",
@@ -46,6 +47,26 @@ def health_check():
         "version": settings.VERSION,
         "database": "connected"
     }
+
+@app.get("/api/demo-target/mode")
+def get_demo_target_mode():
+    import requests
+    try:
+        url = f"{settings.ICREAM_SHOP_URL.rstrip('/')}/api/mode"
+        res = requests.get(url, timeout=3)
+        return res.json()
+    except Exception as e:
+        return {"mode": "vulnerable", "fallback": True, "error": str(e)}
+
+@app.post("/api/demo-target/toggle")
+def toggle_demo_target_mode():
+    import requests
+    try:
+        url = f"{settings.ICREAM_SHOP_URL.rstrip('/')}/api/mode/toggle"
+        res = requests.post(url, timeout=3)
+        return res.json()
+    except Exception as e:
+        return {"mode": "secure", "fallback": True, "error": str(e)}
 
 @app.on_event("startup")
 def seed_initial_demo_data():
@@ -72,7 +93,7 @@ def seed_initial_demo_data():
                 name="iCream Shop (Demonstration Target)",
                 description="Primary artisan ice cream e-commerce demonstration application featuring intentional vulnerabilities in lab mode.",
                 project_type="localhost",
-                target_url="http://127.0.0.1:8001",
+                target_url=settings.ICREAM_SHOP_URL,
                 source_path=os.path.abspath(os.path.join(os.path.dirname(__file__), "../../icream-shop")),
                 tech_stack=["Python 3.10", "FastAPI", "SQLite", "HTML5", "REST API"],
                 security_score=45
@@ -94,7 +115,7 @@ def seed_initial_demo_data():
                 enable_secrets=True,
                 enable_infrastructure=True,
                 enable_api_security=True,
-                target_scope="http://127.0.0.1:8001"
+                target_scope=settings.ICREAM_SHOP_URL
             )
             db.add(initial_scan)
             db.commit()

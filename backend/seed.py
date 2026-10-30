@@ -27,7 +27,7 @@ def seed():
                 name="iCream Shop (Demonstration Target)",
                 description="Primary artisan ice cream e-commerce demonstration application featuring intentional vulnerabilities in lab mode.",
                 project_type="localhost",
-                target_url="http://127.0.0.1:8001",
+                target_url=settings.ICREAM_SHOP_URL,
                 source_path=os.path.abspath(os.path.join(os.path.dirname(__file__), "../icream-shop")),
                 tech_stack=["Python 3.10", "FastAPI", "SQLite", "HTML5", "REST API"],
                 security_score=45
@@ -51,7 +51,7 @@ def seed():
                 enable_secrets=True,
                 enable_infrastructure=True,
                 enable_api_security=True,
-                target_scope="http://127.0.0.1:8001"
+                target_scope=settings.ICREAM_SHOP_URL
             )
             db.add(scan)
             db.commit()

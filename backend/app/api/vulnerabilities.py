@@ -113,8 +113,10 @@ def verify_vulnerability_fix(id: int, db: Session = Depends(get_db)):
     
     # Check if target is running in secure mode
     import requests
+    from app.config import settings
     try:
-        mode_resp = requests.get("http://127.0.0.1:8001/api/mode", timeout=2)
+        url = f"{settings.ICREAM_SHOP_URL.rstrip('/')}/api/mode"
+        mode_resp = requests.get(url, timeout=2)
         if mode_resp.status_code == 200 and mode_resp.json().get("mode") == "secure":
             is_resolved = True
     except Exception:
